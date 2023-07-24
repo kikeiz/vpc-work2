@@ -35,4 +35,4 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           EnvironmentName: ${{ env.ENVIRONMENT }}
-          parameter-overrides: AppName=${{ env.APP_NAME }, EnvironmentName=${{ env.ENVIRONMENT}}
+          parameter-overrides: EnvironmentName=${{ env.ENVIRONMENT}}
