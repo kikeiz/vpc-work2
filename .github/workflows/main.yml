@@ -1,0 +1,28 @@
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Permissions are needed to interact with GitHub's OIDC Token endpoint.
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code from master branch
+        uses: actions/checkout@v2
+
+      # Configure AWS Credential
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ env.AWS_ROLE }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # Deploy VPC
+      - name: Deploys my VPC
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          name: ${{ env.APP_NAME }}-vpc
+          template: ./vpc.yml
+          no-fail-on-empty-changeset: "1"
+          parameter-overrides: AppName=${{ env.APP_NAME }, Environment=${{ env.ENVIRONMENT}}
