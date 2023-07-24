@@ -1,9 +1,9 @@
-name: "Deploy my CloudFormation stack to dev"
+name: Deploy my CloudFormation stack to dev
 
 on:
   push:
     branches:
-      - "main" # only execute this workflow when I’m pushing to “staging”
+      - main # only execute this workflow when I’m pushing to “staging”
 
 env:
   AWS_ROLE: arn:aws:iam::343397212430:role/GitHub-Actions-Role
