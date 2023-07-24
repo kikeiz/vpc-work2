@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main # only execute this workflow when I’m pushing to “staging”
-
+  workflow_dispatch:
 env:
   AWS_ROLE: arn:aws:iam::343397212430:role/GitHub-Actions-Role
   AWS_REGION: us-west-2
