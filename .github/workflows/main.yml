@@ -35,5 +35,5 @@ jobs:
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: ${{ env.ENVIRONMENT }}-vpc
-          template: ../../networking.yml
+          template: ./networking.yml
           parameter-overrides: EnvironmentName=${{ env.ENVIRONMENT}}
