@@ -4,12 +4,21 @@ on:
   push:
     branches:
       - main # only execute this workflow when I’m pushing to “staging”
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        type: string
+        options:
+        - prod
 env:
   AWS_ROLE: arn:aws:iam::343397212430:role/GitHub-Actions-Role
   AWS_REGION: us-west-2
-  ENVIRONMENT: dev
-
+  DEPLOY_ENV: ${{ github.event.inputs.environment || 'dev' }}
+  
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -34,6 +43,6 @@ jobs:
       - name: Deploys my VPC
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: ${{ env.ENVIRONMENT }}-vpc
+          name: ${{ env.DEPLOY_ENV }}-vpc
           template: ./networking.yml
-          parameter-overrides: EnvironmentName=${{ env.ENVIRONMENT}}
+          parameter-overrides: EnvironmentName=${{ env.DEPLOY_ENV }}
